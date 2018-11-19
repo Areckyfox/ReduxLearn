@@ -2,28 +2,10 @@ import React, { Component } from 'react';
 
 import Person from '../components/Person/Person';
 import AddPerson from '../components/AddPerson/AddPerson';
+import * as actionTypes from "../Store/action";
 
 class Persons extends Component {
-    state = {
-        persons: []
-    }
-
-    personAddedHandler = () => {
-        const newPerson = {
-            id: Math.random(), // not really unique but good enough here!
-            name: 'Max',
-            age: Math.floor( Math.random() * 40 )
-        }
-        this.setState( ( prevState ) => {
-            return { persons: prevState.persons.concat(newPerson)}
-        } );
-    }
-
-    personDeletedHandler = (personId) => {
-        this.setState( ( prevState ) => {
-            return { persons: prevState.persons.filter(person => person.id !== personId)}
-        } );
-    }
+  
 
     render () {
         return (
@@ -38,6 +20,18 @@ class Persons extends Component {
                 ))}
             </div>
         );
+    }
+}
+const mapStateToProps = state => {
+    return {
+        prs: state.person
+    };
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onAddedPerson: () => dispatch({type: actionTypes.ADD_PERSON}),
+        onRemovePerson: id) => dispatch({type: actionTypes.REMOVE_PERSON, personId:id})
     }
 }
 
